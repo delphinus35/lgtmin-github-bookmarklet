@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react')
+, $ = require('jquery')
 , url = require('url')
 , parsedUrl = url.parse(location.href, true)
 , query = parsedUrl.query
