@@ -28,7 +28,7 @@
   }
 
   var nameRe = '([\-_\.A-z0-9]+)'
-  , githubIssueUrlRe = new RegExp('^https?://github.com/' + nameRe + '/'
+  , githubIssueUrlRe = new RegExp('^{GITHUB_URL}/' + nameRe + '/'
                                   + nameRe + '/(?:pull|issues)/([0-9]+)')
   , homeUrl = '{BASE_URL}'
   , lgtmUrlTemplate = homeUrl + '/lgtm?user=$USER&repo=$REPO&number=$NUMBER'

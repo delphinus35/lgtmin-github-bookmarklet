@@ -26,6 +26,7 @@ function GitHubApiClient(app, options) {
 
   options = options || {};
   options.scope = options.scope || 'repo';
+  options.githubUrl = options.githubUrl || 'https://github.com'
   this.options = options;
 
   this._app = app;
@@ -34,12 +35,14 @@ function GitHubApiClient(app, options) {
     version: '3.0.0',
     debug: 'development' == process.env.NODE_ENV,
     protocol: 'https',
-    timeout: 5000
+    timeout: 5000,
+    host: options.githubApiHost,
+    pathPrefix: options.githubApiPathPrefix
   };
 
   this.oauth = new OAuth2(AUTH.clientId
                           , AUTH.clientSecret
-                          , "https://github.com/"
+                          , options.githubUrl + '/'
                           , "login/oauth/authorize"
                           , "login/oauth/access_token"
                          );

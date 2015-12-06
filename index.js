@@ -30,6 +30,9 @@ var util = require('util')
     + '[:-1:](http://www.lgtm.in/r/' + hash + ')'
 }
 , TITLE = 'LGTM.in GitHub Bookmarklet'
+, GITHUB_URL = process.env.GITHUB_URL || 'https://github.com'
+, GITHUB_API_HOST = process.env.GITHUB_API_HOST || 'api.github.com'
+, GITHUB_API_PATH_PREFIX = process.env.GITHUB_API_PATH_PREFIX || ''
 ;
 
 // base setup
@@ -98,6 +101,9 @@ app.use(router(app));
 
 client = new Client(app, {
   scope: 'user repo'
+  , githubUrl: GITHUB_URL
+  , githubApiHost: GITHUB_API_HOST
+  , githubApiPathPrefix: GITHUB_API_PATH_PREFIX
 });
 
 app.get('/', function *(next) {
@@ -107,6 +113,7 @@ app.get('/', function *(next) {
   ).then(function(data) {
     var baseUrl = req.protocol + '://' + req.get('host');
     data = data.replace('{BASE_URL}', baseUrl);
+    data = data.replace('{GITHUB_URL}', GITHUB_URL);
     return 'javascript:(function(window,undefined) {'
       + encodeURIComponent(UglifyJs.minify(data, {fromString: true}).code)
       + '})(window);'
